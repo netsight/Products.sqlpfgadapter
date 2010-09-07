@@ -26,6 +26,8 @@ setup(name='Products.sqlpfgadapter',
       install_requires=[
           'setuptools',
           # -*- Extra requirements: -*-
+          'collective.lead',
+          'MySQL-python',
       ],
       entry_points="""
       # -*- Entry points: -*-

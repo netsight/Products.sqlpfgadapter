@@ -4,6 +4,7 @@ import logging
 # Zope imports
 from zope.interface import implements
 from AccessControl import ClassSecurityInfo
+from zope.component import getUtility
 
 # Plone imports
 from Products.Archetypes.public import Schema
@@ -13,6 +14,9 @@ from Products.CMFCore.permissions import View
 # PloneFormGen imports
 from Products.PloneFormGen.content.actionAdapter import \
     FormActionAdapter, FormAdapterSchema
+
+# DB imports
+from collective.lead.interfaces import IDatabase
 
 logger = logging.getLogger("PloneFormGen")
 from Products.sqlpfgadapter.config import PROJECTNAME
@@ -36,5 +40,6 @@ class MySQLPFGAdapter(FormActionAdapter):
         - save the data in SQL and check the result
         """
         print "onSuccess called!"
+        db = getUtility(IDatabase, name='sqlpfgadapter.mysqldb')
 
 registerATCT(MySQLPFGAdapter, PROJECTNAME)

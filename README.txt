@@ -18,19 +18,15 @@ http://plone.293351.n2.nabble.com/plan-for-easy-MySQL-storage-for-collective-meg
 Approach
 ========
 
-We create a new PloneFormGen Action Adapter. This may either call a Z MySQL
-Method from its onSuccess method, or address MySQL in a more direct way.
-
+We create a new PloneFormGen Action Adapter. 
+This uses collective.lead to save the form data to the database.
 
 To do
 =====
 
- * Get it working with manually created Z MySQL Method
- * Then either:
-   - Call the Z MySQL connection directly, or
-   - Create the Z MySQL Method on the fly
+ * Create table and save data
  * Global controlpanel settings for DB location, user, password
- * Plone 4 compatibility (deprecation messages from ZMySQLDA)
+ * Test Plone 4 compatibility
 
 
 Compatibility / Dependencies

@@ -13,6 +13,14 @@
       description="Adds support for storing PloneFormGen and Megaphone form data in SQL"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
-  <!-- -*- extra stuff goes here -*- -->
+
+  <include package="collective.lead" /> 
+  <utility
+      provides="collective.lead.interfaces.IDatabase" 
+      factory=".database.MySQLDatabase" 
+      name="sqlpfgadapter.mysqldb" 
+      />
+
+
   
 </configure>
