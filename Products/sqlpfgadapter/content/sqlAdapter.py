@@ -41,5 +41,7 @@ class MySQLPFGAdapter(FormActionAdapter):
         """
         print "onSuccess called!"
         db = getUtility(IDatabase, name='sqlpfgadapter.mysqldb')
+        rp = db.connection.execute("SELECT * FROM test_table")
+        print rp.fetchall()
 
 registerATCT(MySQLPFGAdapter, PROJECTNAME)
