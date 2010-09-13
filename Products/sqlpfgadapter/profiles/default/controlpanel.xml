@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<object
+    name="portal_controlpanel"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    i18n:domain="Products.sqlpfgadapter">
+
+  <configlet
+      title="SQL settings"
+      action_id="Products.sqlpfgadapter.settings"
+      appId="Products.sqlpfgadapter"
+      category="Products"
+      condition_expr=""
+      url_expr="string:${portal_url}/@@sqlpfg-controlpanel"
+      icon_expr="string:${portal_url}/mysql.gif"
+      visible="True"
+      i18n:attributes="title">
+    <permission>Manage portal</permission>
+  </configlet>
+
+</object>
+

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    i18n_domain="wedgematch.data">
+
+  <genericsetup:registerProfile
+      name="default"
+      title="SQL-PFG Adapter"
+      directory="profiles/default"
+      description="Adds support for storing PloneFormGen and Megaphone form data in SQL"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+</configure>

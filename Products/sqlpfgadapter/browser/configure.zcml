@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="">
+
+  <browser:page
+      name="sqlpfg-controlpanel"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      permission="cmf.ManagePortal"
+      class="Products.sqlpfgadapter.controlpanel.SQLPFGSettingsControlPanel"
+      />
+
+</configure>
