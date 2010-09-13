@@ -26,8 +26,10 @@ setup(name='Products.sqlpfgadapter',
       install_requires=[
           'setuptools',
           # -*- Extra requirements: -*-
+          'Products.PloneFormGen',
           'collective.lead',
           'MySQL-python',
+          'plone.app.registry',
       ],
       entry_points="""
       # -*- Entry points: -*-

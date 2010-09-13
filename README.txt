@@ -21,6 +21,21 @@ Approach
 We create a new PloneFormGen Action Adapter. 
 This uses collective.lead to save the form data to the database.
 
+
+Installing
+==========
+
+This is currently only possible in a development setup, as there is no egg
+released yet::
+
+    svn co https://svn.plone.org/svn/collective/Products.PloneFormGen/adapters/Products.sqlpfgadapter/buildout/plone3 sqlpfg-plone3
+    cd sqlpfg-plone3
+    python2.4 bootstrap.py
+    ./bin/buildout -c buildout-dvl.cfg
+
+If you use another buildout configuration, remember to use the KGS at http://good-py.appspot.com/release/plone.app.registry/1.0b2?plone=3.3.5
+
+
 To do
 =====
 
