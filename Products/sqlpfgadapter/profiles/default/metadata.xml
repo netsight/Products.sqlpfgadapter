@@ -2,10 +2,8 @@
 <metadata>
   <version>0.1dvl</version>
   <dependencies>
-    <dependency>
-      profile-Products.PloneFormGen:default
-      profile-plone.app.registry:default
-    </dependency>
+    <dependency>profile-Products.PloneFormGen:default</dependency>
+    <dependency>profile-plone.app.registry:default</dependency>
   </dependencies>
 </metadata>
 
