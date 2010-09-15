@@ -14,11 +14,16 @@
   <include package=".browser" /> 
   <include file="profiles.zcml" />
 
-  <!--
-  <subscriber
-      for=""
-      handler="events.addTable"
+  <five:implements
+      class=".content.MySQLPFGAdapter"
+      interface=".interfaces.ISQLPFGAdapter"
       />
-  -->
+  <subscriber
+      for="
+        .interfaces.ISQLPFGAdapter
+        Products.Archetypes.interfaces.IObjectInitializedEvent
+        "
+      handler=".events.addTable"
+      />
 
 </configure>

@@ -36,4 +36,6 @@ class ISQLPFGSettings(Interface):
                                 description=_(u"The name of the database on this server"),
                                 required=True)        
         
-        
+class ISQLPFGAdapter(Interface):
+    """ Marker interface for SQLPFGAdapter content
+    """
