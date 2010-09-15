@@ -63,7 +63,10 @@ class MySQLPFGAdapter(FormActionAdapter):
 
         # Get the table, find out which columns we have.
         db = self._getDB()
-        table = Table(self.table_id, db.metadata, autoload=True)
+        engine = db.engine
+        meta = MetaData(db)
+        meta.bind = engine
+        table = Table(self.table_id, meta, autoload=True)
         columns = table.columns.keys()
 
         # Create a dictionary with the form fields. 
@@ -86,24 +89,29 @@ class MySQLPFGAdapter(FormActionAdapter):
         This method is called after the action adapter is created.
         """
         db = self._getDB()
-        metadata = MetaData(db)
+        meta = MetaData(db)
 
         table_id = self.generateTableId()
 
         # Create a "bare" table (python object)
         table = Table(
             table_id, 
-            metadata,
+            meta,
             Column('id', Integer, primary_key=True),
             )
         # Add the form fields to the table.
         for field in self.fgFields():
             f_name = field.getName()
             if field.type == 'string':
-                table.append_column(Column(f_name, String(100)))
+                table.append_column(Column(
+                    f_name, 
+                    String(255), 
+                    nullable=True,
+                    default=None,
+                    ))
 
         # Store the table in the database
-        metadata.create_all(db.engine)
+        meta.create_all(db.engine)
         # Store the table's id
         self.setTable_id(table_id)
         
