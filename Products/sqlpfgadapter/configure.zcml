@@ -13,5 +13,11 @@
   <include package=".browser" /> 
   <include file="profiles.zcml" />
 
+  <!--
+  <subscriber
+      for=""
+      handler="events.addTable"
+      />
+  -->
 
 </configure>

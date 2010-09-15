@@ -6,7 +6,7 @@
  <property
     name="description">A form action adapter that saves form data to a MySQL database
     </property>
- <property name="content_icon">mysql.gif</property>
+ <property name="content_icon">sql-action.gif</property>
  <property name="content_meta_type">MySQLPFGAdapter</property>
  <property name="product">sqlpfgadapter</property>
  <property name="factory">addMySQLPFGAdapter</property>
