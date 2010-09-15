@@ -5,6 +5,7 @@
     i18n_domain="Products.sqlpfgadapter">
 
   <include package="collective.lead" /> 
+  <include package="plone.app.registry" /> 
   <utility
       provides="collective.lead.interfaces.IDatabase" 
       factory=".database.MySQLDatabase" 
