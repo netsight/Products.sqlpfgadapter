@@ -63,8 +63,8 @@ class MySQLPFGAdapter(FormActionAdapter):
 
         # Get the table, find out which columns we have.
         db = self._getDB()
-        engine = db.engine
         meta = MetaData(db)
+        engine = db.engine
         meta.bind = engine
         table = Table(self.table_id, meta, autoload=True)
         columns = table.columns.keys()
@@ -102,6 +102,7 @@ class MySQLPFGAdapter(FormActionAdapter):
         # Add the form fields to the table.
         for field in self.fgFields():
             f_name = field.getName()
+            print f_name, field.type()
             if field.type == 'string':
                 table.append_column(Column(
                     f_name, 
