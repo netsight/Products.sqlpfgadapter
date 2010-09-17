@@ -1,31 +1,23 @@
 Introduction
 ============
 
-It should be easy to make a FormFolder (ActionLetter) store its data in MySQL.
-This product aims to facilitate storing data from PloneFormGen (and also
-collective.megaphone) in a MySQL database.  
-(It may later work for other SQL dialects also, hence the name
-Products.sqlpfgadapter.)
+This product allows to store PloneFormGen_ form data in a MySQL database.
+(It may also work for other SQL dialects also.)
 
 You could also save PFG data in SQL by using a Z SQL Method as an
-after-validation script.
-(http://plone.org/products/ploneformgen/documentation/tutorial/sql-crud) 
-This works as well, but: 
+after-validation script, as described in the SQL-CRUD-tutorial_.  
+This works, but: 
 
-- it's quite cumbersome for ordinary users
-- it doesn't work with collective.megaphone 
-  (http://plone.293351.n2.nabble.com/plan-for-easy-MySQL-storage-for-collective-megaphone-td5481845.html#a5481845).
+- it's a lot of manual work, and quite cumbersome for ordinary users
+- it doesn't work with collective.megaphone_ (see mailinglist-discussion_)
 
 The goal for this package is:
 
-- to be easy to use for ordinary people
-- to work with collective.megaphone
+- to make SQL storage from PloneFormGen easy
+- to also work with collective.megaphone
 
-Approach
-========
-
-We create a new PloneFormGen Action Adapter. 
-This uses SQLAlchemy (collective.lead) to save the form data to the database.
+To achieve this, we create a new PloneFormGen action-adapter_. 
+This uses SQLAlchemy_ (collective.lead_) to save the form data to the database.
 
 
 Installing
@@ -103,7 +95,7 @@ To do
 Compatibility / Dependencies
 ============================
 
-Tested on Plone 3.3.5
+Tested on Plone 3.3.5 with collective.lead 1.0, SQLAlchemy 0.4.8, MySQL 5.1.41
 
 This product uses plone.app.registry for its controlpanel. In order for it to
 work, add this to your buildout::
@@ -114,3 +106,11 @@ work, add this to your buildout::
 
     [versions]
     z3c.form = 1.9.0
+
+.. _PloneFormGen: http://plone.org/products/ploneformgen
+.. _collective.megaphone: http://plone.org/products/megaphone
+.. _SQL-CRUD-tutorial: http://plone.org/products/ploneformgen/documentation/tutorial/sql-crud 
+.. _mailinglist-discussion: http://plone.293351.n2.nabble.com/plan-for-easy-MySQL-storage-for-collective-megaphone-td5481845.html#a5481845
+.. _action-adapter: http://plone.org/products/ploneformgen/documentation/reference/fields-and-objects/adapters
+.. _SQLAlchemy: http://www.sqlalchemy.org
+.. _collective.lead: http://pypi.python.org/pypi/collective.lead
