@@ -3,7 +3,7 @@
    meta_type="Factory-based Type Information with dynamic views"
    xmlns:i18n="http://xml.zope.org/namespaces/i18n">
  <property name="allowed_content_types" purge="False">
-  <element value="MySQLPFGAdapter"/>
+  <element value="SQLPFGAdapter"/>
  </property>
 </object>
 

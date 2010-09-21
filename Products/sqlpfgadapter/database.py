@@ -6,7 +6,7 @@ from zope.component import getUtility
 from plone.registry.interfaces import IRegistry
 from Products.sqlpfgadapter.interfaces import ISQLPFGSettings
 
-class MySQLDatabase(Database):
+class SQLDatabase(Database):
     """ database utility """
 
     @property

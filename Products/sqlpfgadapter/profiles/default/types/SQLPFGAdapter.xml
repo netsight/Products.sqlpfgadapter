@@ -2,14 +2,14 @@
 <object name="MySQLPFGAdapter"
    meta_type="Factory-based Type Information with dynamic views"
    xmlns:i18n="http://xml.zope.org/namespaces/i18n">
- <property name="title">MySQL Adapter</property>
+ <property name="title">SQL Adapter</property>
  <property
-    name="description">A form action adapter that saves form data to a MySQL database
+    name="description">A form action adapter that saves form data to a SQL database
     </property>
  <property name="content_icon">sql-action.gif</property>
- <property name="content_meta_type">MySQLPFGAdapter</property>
+ <property name="content_meta_type">SQLPFGAdapter</property>
  <property name="product">sqlpfgadapter</property>
- <property name="factory">addMySQLPFGAdapter</property>
+ <property name="factory">addSQLPFGAdapter</property>
  <property name="immediate_view">base_view</property>
  <property name="global_allow">False</property>
  <property name="filter_content_types">False</property>

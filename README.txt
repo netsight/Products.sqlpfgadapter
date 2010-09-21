@@ -1,8 +1,14 @@
 Introduction
 ============
 
-This product allows to store PloneFormGen_ form data in a MySQL database.
-(It may also work for other SQL dialects also.)
+The goal for this package is:
+
+- to make SQL storage from PloneFormGen easy
+- to be usable with collective.megaphone
+
+To achieve this, we create a new PloneFormGen action-adapter_. 
+This uses SQLAlchemy_ (collective.lead_) to save the form data to the database.
+(SQLAlchemy should work on most SQL dialects.)
 
 You could also save PFG data in SQL by using a Z SQL Method as an
 after-validation script, as described in the SQL-CRUD-tutorial_.  
@@ -10,14 +16,6 @@ This works, but:
 
 - it's a lot of manual work, and quite cumbersome for ordinary users
 - it doesn't work with collective.megaphone_ (see mailinglist-discussion_)
-
-The goal for this package is:
-
-- to make SQL storage from PloneFormGen easy
-- to also work with collective.megaphone
-
-To achieve this, we create a new PloneFormGen action-adapter_. 
-This uses SQLAlchemy_ (collective.lead_) to save the form data to the database.
 
 
 Installing
@@ -51,7 +49,7 @@ settings.
 Usage
 =====
 
-To save a form's data in the database, add a "MySQL Adapter" from the "Add
+To save a form's data in the database, add an "SQL Storage" from the "Add
 new..." menu in the Form Folder. Give it a title and save it.
 
     A database table will be created. Its name is generated (from the Form
@@ -64,7 +62,9 @@ database.
 Usage with collective.megaphone
 -------------------------------
 
-Not implemented yet.
+The product will work just as well with collective.megaphone. However, to be
+able to add the action adapter to an Action Letter or Megaphone Action, you
+have to add "SQLPFGAdapter" to the "Allowed content types" via the ZMI.
 
 
 Limitations
@@ -90,6 +90,8 @@ To do
 * Support all form field types.
 * Test Plone 4 compatibility;
 * Allow updating tables when fields are added;
+* When invalid database credentials are supplied inititally, a restart is
+  required for the new settings to take effect;
 
 
 Compatibility / Dependencies

@@ -1,4 +1,4 @@
 # used by sqlpfgadapter/__init__.py
 import sqlAdapter
 # used in configure.zcml
-from sqlAdapter import MySQLPFGAdapter
+from sqlAdapter import SQLPFGAdapter

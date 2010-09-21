@@ -42,17 +42,17 @@ schema = FormAdapterSchema.copy() + Schema((
         ),
 ))
 
-class MySQLPFGAdapter(FormActionAdapter):
-    """ An adapter for PloneFOrmGen that saves results in a MySQL table
+class SQLPFGAdapter(FormActionAdapter):
+    """ An adapter for PloneFormGen that saves results in an SQL table
     """
     schema = schema
     security = ClassSecurityInfo()
 
     meta_type = portal_type = 'SQLPFGAdapter'
-    archetype_name = 'MySQL Adapter'
+    archetype_name = 'SQL Adapter'
 
     def _getDB(self):
-        return getUtility(IDatabase, name='sqlpfgadapter.mysqldb')
+        return getUtility(IDatabase, name='sqlpfgadapter.sqldb')
             
     security.declareProtected(View, 'onSuccess')
     def onSuccess(self, fields, REQUEST=None):
@@ -192,5 +192,5 @@ class MySQLPFGAdapter(FormActionAdapter):
             value = datetime.fromtimestamp(zope_dt.timeTime())
         return value
 
-registerATCT(MySQLPFGAdapter, PROJECTNAME)
+registerATCT(SQLPFGAdapter, PROJECTNAME)
          
