@@ -3,7 +3,7 @@
  <property
     name="title">Contains workflow definitions for your portal</property>
  <bindings>
-  <type type_id="MySQLPFGAdapter"/>
+  <type type_id="SQLPFGAdapter"/>
  </bindings>
 </object>
 
