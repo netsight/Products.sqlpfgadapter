@@ -66,6 +66,8 @@ The product will work just as well with collective.megaphone. However, to be
 able to add the action adapter to an Action Letter or Megaphone Action, you
 have to add "SQLPFGAdapter" to the "Allowed content types" via the ZMI.
 
+The product collective.megaphonesql_ can do this for you.
+
 
 Limitations
 ===========
@@ -116,3 +118,4 @@ work, add this to your buildout::
 .. _action-adapter: http://plone.org/products/ploneformgen/documentation/reference/fields-and-objects/adapters
 .. _SQLAlchemy: http://www.sqlalchemy.org
 .. _collective.lead: http://pypi.python.org/pypi/collective.lead
+..  _collective.megaphonesql: http://svn.plone.org/svn/collective/collective.megaphonesql 

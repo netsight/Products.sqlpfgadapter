@@ -1,11 +1,10 @@
 Changelog
 =========
 
-0.1a2 (2010-09-21)
+0.1a2 (2010-09-22)
 ------------------
 
-- Renamed all "MySQL" to "SQL", as the SQLAlchemy should be generic enough to
-  handle most SQL dialects. Still tested only on MySQL though.
+- Renamed all "MySQL" to "SQL", including content types. No upgrade provided! 
 - Added documentation about usage with collective.megaphone.
 
 0.1a1 (2010-09-20)
