@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.1a2'
+version = '0.1b1'
 
 setup(name='Products.sqlpfgadapter',
       version=version,
@@ -14,9 +14,9 @@ setup(name='Products.sqlpfgadapter',
         "Framework :: Plone",
         "Programming Language :: Python",
         ],
-      keywords='',
-      author='',
-      author_email='',
+      keywords='web plone sql',
+      author='Kees Hink',
+      author_email='hink@gw20e.com',
       url='http://svn.plone.org/svn/collective/',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
