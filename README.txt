@@ -107,7 +107,7 @@ Tested with:
 - SQL: MySQL 5.1.41
 
 This product uses plone.app.registry for its controlpanel. In order for it to
-work, use its "Known gooed set" (see section "Developers" above).
+work, use its "Known good set" (see section "Developers" above).
 
 .. _PloneFormGen: http://plone.org/products/ploneformgen
 .. _collective.megaphone: http://plone.org/products/megaphone
