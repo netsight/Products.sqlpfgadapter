@@ -23,7 +23,7 @@ from collective.lead.interfaces import IDatabase
 # sqlalchemy imports
 from sqlalchemy import MetaData, Table, Column
 # sqlalchemy column types
-from sqlalchemy import Integer, String, Text, Boolean, DateTime
+from sqlalchemy import Integer, String, Text, Boolean, DateTime, Float
 
 logger = logging.getLogger("PloneFormGen")
 from Products.sqlpfgadapter.config import PROJECTNAME
@@ -159,7 +159,7 @@ class SQLPFGAdapter(FormActionAdapter):
         column = None
         f_name = field.getName()
         print f_name, field.type, field.__class__
-        if field.type == 'string':
+        f field.type == 'string':
             column = Column(f_name, String(255), nullable=True, default=None)
         if field.type in ['text', 'lines']:
             column = Column(f_name, Text())
@@ -169,14 +169,13 @@ class SQLPFGAdapter(FormActionAdapter):
             column = Column(f_name, Integer())
         if field.type == 'datetime':
             column = Column(f_name, DateTime())
-            
+        if field.type == 'fixedpoint':
+            column = Column(f_name, Float())
         return column
 
     def _massageValue(self, value, field):
         """ Do some extra massaging for the case of:
         - list types (store as delimited text)
-        - XXX TODO dates come in as strings, and are not converted ('0000-00-00
-          00:00:00' is set). 
         """
         list_delimiter = '\nXXX'
         string_time_format = '%Y-%m-%d %H:%M:%S'

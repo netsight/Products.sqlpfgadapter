@@ -26,12 +26,23 @@ Developers
 
 To install a complete development setup::
 
+    svn co https://svn.plone.org/svn/collective/Products.PloneFormGen/adapters/Products.sqlpfgadapter/buildout/plone4 sqlpfg-plone4
+    cd sqlpfg-plone4
+    python2.6 bootstrap.py
+    ./bin/buildout -c buildout-dvl.cfg
+
+Or, for Plone 3:
+
     svn co https://svn.plone.org/svn/collective/Products.PloneFormGen/adapters/Products.sqlpfgadapter/buildout/plone3 sqlpfg-plone3
     cd sqlpfg-plone3
     python2.4 bootstrap.py
     ./bin/buildout -c buildout-dvl.cfg
 
-If you use another buildout configuration, see dependencies below.
+If you use another buildout configuration, be sure to include the "Known good
+set" for plone.app.registry for your version of Plone.
+
+    [versions]
+    z3c.form = 1.9.0
 
 After running buildout, collective.recipe.plonesite should have created a Plone
 site with id 'Plone', and with PloneFormGen, plone.app.registry and this
@@ -77,7 +88,6 @@ This product is under development. For now, we have major limitations:
 - Not all PloneFormGen fields work, notably:
 
   - file field
-  - decimal field
   - rating-scale field
 
 - Adding and removing fields, or changing their names, doesn't change the
@@ -85,31 +95,18 @@ This product is under development. For now, we have major limitations:
   discarded.
 
 
-To do
-=====
-
-* Test collective.megaphone compatibility
-* Support all form field types.
-* Test Plone 4 compatibility;
-* Allow updating tables when fields are added;
-* When invalid database credentials are supplied inititally, a restart is
-  required for the new settings to take effect;
-
-
 Compatibility / Dependencies
 ============================
 
-Tested on Plone 3.3.5 with collective.lead 1.0, SQLAlchemy 0.4.8, MySQL 5.1.41
+Tested with: 
+* Plone: 3.3.5, 4.0 
+* PloneFormGen: 1.6.0b4, 1.6.0b5
+* megaphone: 1.4.1, 2.0b1
+* collective.lead 1.0, SQLAlchemy 0.4.8
+* SQL: MySQL 5.1.41
 
 This product uses plone.app.registry for its controlpanel. In order for it to
-work, add this to your buildout::
-
-    [buildout]
-    extends +=
-        http://good-py.appspot.com/release/plone.app.registry/1.0b2?plone=3.3.5
-
-    [versions]
-    z3c.form = 1.9.0
+work, use its "Known gooed set" (see section "Developers" above).
 
 .. _PloneFormGen: http://plone.org/products/ploneformgen
 .. _collective.megaphone: http://plone.org/products/megaphone

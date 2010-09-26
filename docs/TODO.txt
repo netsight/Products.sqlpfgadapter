@@ -1,0 +1,10 @@
+To do
+=====
+
+* Support all form field types.
+* Allow updating tables when fields are added;
+* When invalid database credentials are supplied inititally, a restart is
+  required for the new settings to take effect;
+
+
+

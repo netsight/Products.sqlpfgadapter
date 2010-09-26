@@ -1,8 +1,11 @@
 Changelog
 =========
 
-0.1b1 (unreleased)
+0.1b1 (2010-09-26)
 ------------------
+
+- Updated doc (tested and works on Plone 4)
+- Add handling for decimal form field 
 
 0.1a2 (2010-09-22)
 ------------------
