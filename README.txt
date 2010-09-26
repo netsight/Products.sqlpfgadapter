@@ -42,10 +42,6 @@ If you use another buildout configuration, be sure to include the "Known good
 set" for plone.app.registry for your version of Plone. In the case of Plone 3,
 you'll also want to pin `z3c.form` to `1.9.0`.
 
-After running buildout, collective.recipe.plonesite should have created a Plone
-site with id 'Plone', and with PloneFormGen, plone.app.registry and this
-product installed.
-
 
 Configuration
 =============
