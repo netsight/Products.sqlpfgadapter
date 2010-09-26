@@ -70,7 +70,7 @@ class SQLPFGAdapter(FormActionAdapter):
         meta = MetaData(db)
         engine = db.engine
         # For debugging: Show what we put into SQL
-        engine.echo = True
+        #engine.echo = True
         meta.bind = engine
         table = Table(self.table_id, meta, autoload=True)
         column_keys = table.columns.keys()
