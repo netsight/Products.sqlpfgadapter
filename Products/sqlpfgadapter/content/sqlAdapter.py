@@ -159,7 +159,7 @@ class SQLPFGAdapter(FormActionAdapter):
         column = None
         f_name = field.getName()
         print f_name, field.type, field.__class__
-        f field.type == 'string':
+        if field.type == 'string':
             column = Column(f_name, String(255), nullable=True, default=None)
         if field.type in ['text', 'lines']:
             column = Column(f_name, Text())

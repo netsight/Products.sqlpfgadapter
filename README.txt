@@ -31,7 +31,7 @@ To install a complete development setup::
     python2.6 bootstrap.py
     ./bin/buildout -c buildout-dvl.cfg
 
-Or, for Plone 3:
+Or, for Plone 3::
 
     svn co https://svn.plone.org/svn/collective/Products.PloneFormGen/adapters/Products.sqlpfgadapter/buildout/plone3 sqlpfg-plone3
     cd sqlpfg-plone3
@@ -39,10 +39,8 @@ Or, for Plone 3:
     ./bin/buildout -c buildout-dvl.cfg
 
 If you use another buildout configuration, be sure to include the "Known good
-set" for plone.app.registry for your version of Plone.
-
-    [versions]
-    z3c.form = 1.9.0
+set" for plone.app.registry for your version of Plone. In the case of Plone 3,
+you'll also want to pin `z3c.form` to `1.9.0`.
 
 After running buildout, collective.recipe.plonesite should have created a Plone
 site with id 'Plone', and with PloneFormGen, plone.app.registry and this
