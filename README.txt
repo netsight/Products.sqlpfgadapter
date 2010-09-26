@@ -99,11 +99,12 @@ Compatibility / Dependencies
 ============================
 
 Tested with: 
-* Plone: 3.3.5, 4.0 
-* PloneFormGen: 1.6.0b4, 1.6.0b5
-* megaphone: 1.4.1, 2.0b1
-* collective.lead 1.0, SQLAlchemy 0.4.8
-* SQL: MySQL 5.1.41
+
+- Plone: 3.3.5, 4.0 
+- PloneFormGen: 1.6.0b4, 1.6.0b5
+- megaphone: 1.4.1, 2.0b1
+- collective.lead 1.0, SQLAlchemy 0.4.8
+- SQL: MySQL 5.1.41
 
 This product uses plone.app.registry for its controlpanel. In order for it to
 work, use its "Known gooed set" (see section "Developers" above).
