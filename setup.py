@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.1-SNAPSHOT'
+version = '1.0-SNAPSHOT'
 
 setup(name='Products.sqlpfgadapter',
       version=version,
