@@ -110,4 +110,4 @@ work, use its "Known good set" (see section "Developers" above).
 .. _action-adapter: http://plone.org/products/ploneformgen/documentation/reference/fields-and-objects/adapters
 .. _SQLAlchemy: http://www.sqlalchemy.org
 .. _collective.lead: http://pypi.python.org/pypi/collective.lead
-..  _collective.megaphonesql: http://svn.plone.org/svn/collective/collective.megaphonesql 
+..  _collective.megaphonesql: http://plone.org/products/collective.megaphonesql
