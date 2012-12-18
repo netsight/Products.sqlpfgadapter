@@ -16,6 +16,7 @@ from Products.CMFCore.permissions import View
 # PloneFormGen imports
 from Products.PloneFormGen.content.actionAdapter import FormActionAdapter, \
     FormAdapterSchema
+from Products.PloneFormGen.interfaces import IStatefulActionAdapter
 
 # DB imports
 from collective.lead.interfaces import IDatabase
@@ -47,13 +48,28 @@ class SQLPFGAdapter(FormActionAdapter):
     """
     schema = schema
     security = ClassSecurityInfo()
+    implements(IStatefulActionAdapter)
 
     meta_type = portal_type = 'SQLPFGAdapter'
     archetype_name = 'SQL Adapter'
 
     def _getDB(self):
         return getUtility(IDatabase, name='sqlpfgadapter.sqldb')
-            
+
+    security.declareProtected(View, '_getTable')
+    def _getTable(self):
+        if not self.table_id:
+            # not yet initialised
+            return None
+
+        db = self._getDB()
+        meta = MetaData(db)
+        engine = db.engine
+        # For debugging: Show what we put into SQL
+        #engine.echo = True
+        meta.bind = engine
+        return Table(self.table_id, meta, autoload=True)
+
     security.declareProtected(View, 'onSuccess')
     def onSuccess(self, fields, REQUEST=None):
         """ The essential method of a PloneFormGen Adapter.
@@ -64,18 +80,10 @@ class SQLPFGAdapter(FormActionAdapter):
         - add a row to the table where we set the value for these fields
 
         """
-
-        # Get the table, find out which columns we have.
-        db = self._getDB()
-        meta = MetaData(db)
-        engine = db.engine
-        # For debugging: Show what we put into SQL
-        #engine.echo = True
-        meta.bind = engine
-        table = Table(self.table_id, meta, autoload=True)
+        table = self._getTable()
         column_keys = table.columns.keys()
 
-        # Create a dictionary with the form fields. 
+        # Create a dictionary with the form fields.
         # Include only fields for which a record exists.
         new_record = {}
         for field in fields:
@@ -87,10 +95,63 @@ class SQLPFGAdapter(FormActionAdapter):
                     print field_id, field.meta_type, value
                     new_record[field_id] = value
 
-        # Add row. This will add an empty row if no keys from the new_record
+        if self.getAllowEditPrevious():
+            # Check userkey column
+            if '_user_key' not in column_keys:
+                logger.error('No userkey column found in database')
+            # Add userkey to record
+            userkey = self.getUserKey()
+            new_record['_user_key'] = userkey
+            # Look for existing rows
+            whereclause = '_user_key = "%s"' % userkey
+            existing = table.select(whereclause=whereclause).execute().rowcount
+            if existing:
+                table.update(whereclause=whereclause,
+                             values=new_record).execute()
+                return
+
+        # Add new row. This will add an empty row if no keys from the new_record
         # dictionary are in the table.
         if new_record:
             result = table.insert().execute(new_record)
+
+    security.declareProtected(View, 'hasExistingValues')
+    def hasExistingValues(self, userkey):
+        table = self._getTable()
+        if table is None:
+            logger.error('SQL Table not initialised!')
+            return False
+
+        column_keys = table.columns.keys()
+        if '_user_key' not in column_keys:
+            logger.error('No userkey column found in database')
+            return False
+
+        whereclause = '_user_key = "%s"' % userkey
+        existing = table.select(whereclause=whereclause).execute().fetchone()
+        return existing is not None
+
+    security.declareProtected(View, 'getExistingValue')
+    def getExistingValue(self, field, userkey):
+        """ Look up existing data for the current user """
+        field_id = field.getId()
+        table = self._getTable()
+        if table is None:
+            logger.error('SQL Table not initialised!')
+            return None
+
+        column_keys = table.columns.keys()
+        if field_id not in column_keys:
+            return None
+
+        if '_user_key' not in column_keys:
+            logger.error('No userkey column found in database')
+            return None
+
+        whereclause = '_user_key = "%s"' % userkey
+        existing = table.select(whereclause=whereclause).execute().fetchone()
+        if existing is not None:
+            return existing[field_id]
 
     def createTable(self):
         """ Create a table in the database.
@@ -103,10 +164,17 @@ class SQLPFGAdapter(FormActionAdapter):
 
         # Create a "bare" table (python object)
         table = Table(
-            table_id, 
+            table_id,
             meta,
             Column('id', Integer, primary_key=True),
             )
+        # If editing previous submissions allowed
+        # we need to add a user key column
+        if self.getAllowEditPrevious():
+            column = Column('_user_key', String(255),
+                            nullable=False, default=None)
+            table.append_column(column)
+
         # Add the form fields to the table.
         for field in self.fgFields():
             column = self._createColumn(field)
@@ -117,7 +185,7 @@ class SQLPFGAdapter(FormActionAdapter):
         meta.create_all(db.engine)
         # Store the table's id
         self.setTable_id(table_id)
-        
+
     def _generateTableId(self):
         """ Generate a useful name for the table:
 
@@ -138,22 +206,22 @@ class SQLPFGAdapter(FormActionAdapter):
             Products.Archetypes.Field.StringField
             Products.PloneFormGen.content.fieldsBase.LinesVocabularyField
             Products.PloneFormGen.content.fieldsBase.StringVocabularyField
-        text    
+        text
             Products.PloneFormGen.content.fields.PlainTextField
             Products.PloneFormGen.content.fields.HtmlTextField
-        lines   
+        lines
             Products.Archetypes.Field.LinesField
-        boolean 
+        boolean
             Products.PloneFormGen.content.fields.NRBooleanField
-        integer 
+        integer
             Products.Archetypes.Field.IntegerField
-        datetime    
+        datetime
             FormDateField
-        file    
+        file
             Products.Archetypes.Field.FileField
-        fixedpoint  
+        fixedpoint
             Products.Archetypes.Field.FixedPointField
-        likert  
+        likert
             Products.PloneFormGen.content.likertField.LikertField
         """
         column = None
@@ -192,4 +260,4 @@ class SQLPFGAdapter(FormActionAdapter):
         return value
 
 registerATCT(SQLPFGAdapter, PROJECTNAME)
-         
+
