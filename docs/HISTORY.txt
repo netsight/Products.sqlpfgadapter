@@ -1,0 +1,37 @@
+Changelog
+=========
+
+1.0-SNAPSHOT (unreleased)
+-------------------------
+
+1.0.1 (2011-01-10)
+------------------
+
+Re-release as source dist.
+
+1.0.0 (2010-11-10)
+------------------
+
+Python 2.4 binary release.
+
+0.1b2 (2010-09-26)
+------------------
+
+- typo in sqlApadapter.py 
+
+0.1b1 (2010-09-26)
+------------------
+
+- Updated doc (tested and works on Plone 4)
+- Add handling for decimal form field 
+
+0.1a2 (2010-09-22)
+------------------
+
+- Renamed all "MySQL" to "SQL", including content types. No upgrade provided! 
+- Added documentation about usage with collective.megaphone.
+
+0.1a1 (2010-09-20)
+------------------
+
+- Initial release
