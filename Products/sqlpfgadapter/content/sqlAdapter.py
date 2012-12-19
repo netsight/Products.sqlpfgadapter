@@ -128,7 +128,7 @@ class SQLPFGAdapter(FormActionAdapter):
         if not sm.checkPermission(ModifyPortalContent, self):
             raise Unauthorized("You do not have permission to download this form data")
 
-    security.declareProtected(View, 'hasExistingValues')
+    security.declareProtected(View, 'hasExistingValuesFor')
     def hasExistingValuesFor(self, userkey):
         self.checkUserKey(userkey)
 
@@ -146,7 +146,7 @@ class SQLPFGAdapter(FormActionAdapter):
         existing = table.select(whereclause=whereclause).execute().fetchone()
         return existing is not None
 
-    security.declareProtected(View, 'getExistingValue')
+    security.declareProtected(View, 'getExistingValueFor')
     def getExistingValueFor(self, field, userkey):
         self.checkUserKey(userkey)
 
