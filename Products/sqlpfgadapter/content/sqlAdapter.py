@@ -4,6 +4,8 @@ import logging
 # Zope imports
 from zope.interface import implements
 from AccessControl import ClassSecurityInfo
+from AccessControl import getSecurityManager
+from AccessControl import Unauthorized
 from zope.component import getUtility
 from DateTime import DateTime as ZopeDateTime
 from datetime import datetime
@@ -12,6 +14,7 @@ from datetime import datetime
 from Products.Archetypes.public import Schema, StringField, StringWidget
 from Products.ATContentTypes.content.base import registerATCT
 from Products.CMFCore.permissions import View
+from Products.CMFCore.permissions import ModifyPortalContent
 
 # PloneFormGen imports
 from Products.PloneFormGen.content.actionAdapter import FormActionAdapter, \
@@ -92,7 +95,7 @@ class SQLPFGAdapter(FormActionAdapter):
                 request_value = REQUEST.get(field_id)
                 if request_value:
                     value = self._massageValue(request_value, field)
-                    print field_id, field.meta_type, value
+                    #print field_id, field.meta_type, value
                     new_record[field_id] = value
 
         if self.getAllowEditPrevious():
@@ -113,10 +116,22 @@ class SQLPFGAdapter(FormActionAdapter):
         # Add new row. This will add an empty row if no keys from the new_record
         # dictionary are in the table.
         if new_record:
-            result = table.insert().execute(new_record)
+            table.insert().execute(new_record)
+
+    security.declareProtected(View, 'checkUserKey')
+    def checkUserKey(self, userkey):
+        """ require the 'modify' permission to access
+            data for userkeys other than your own """
+        if userkey == self.getUserKey():
+            return
+        sm = getSecurityManager()
+        if not sm.checkPermission(ModifyPortalContent, self):
+            raise Unauthorized("You do not have permission to download this form data")
 
     security.declareProtected(View, 'hasExistingValues')
-    def hasExistingValues(self, userkey):
+    def hasExistingValuesFor(self, userkey):
+        self.checkUserKey(userkey)
+
         table = self._getTable()
         if table is None:
             logger.error('SQL Table not initialised!')
@@ -132,8 +147,9 @@ class SQLPFGAdapter(FormActionAdapter):
         return existing is not None
 
     security.declareProtected(View, 'getExistingValue')
-    def getExistingValue(self, field, userkey):
-        """ Look up existing data for the current user """
+    def getExistingValueFor(self, field, userkey):
+        self.checkUserKey(userkey)
+
         field_id = field.getId()
         table = self._getTable()
         if table is None:
