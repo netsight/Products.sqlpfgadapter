@@ -29,7 +29,7 @@ from sqlalchemy import MetaData, Table, Column
 # sqlalchemy column types
 from sqlalchemy import Integer, String, Text, Boolean, DateTime, Float
 
-logger = logging.getLogger("PloneFormGen")
+logger = logging.getLogger("Products.sqlpfgadapter")
 from Products.sqlpfgadapter.config import PROJECTNAME
 
 schema = FormAdapterSchema.copy() + Schema((
@@ -95,8 +95,12 @@ class SQLPFGAdapter(FormActionAdapter):
                 request_value = REQUEST.get(field_id)
                 if request_value:
                     value = self._massageValue(request_value, field)
-                    #print field_id, field.meta_type, value
                     new_record[field_id] = value
+                else:
+                    # if it's a boolean and missing from the request
+                    # then we need to set to False
+                    if field.meta_type == 'FormBooleanField':
+                        new_record[field_id] = False
 
         if self.getAllowEditPrevious():
             # Check userkey column
@@ -242,7 +246,7 @@ class SQLPFGAdapter(FormActionAdapter):
         """
         column = None
         f_name = field.getName()
-        print f_name, field.type, field.__class__
+        logger.info('Trying to create column for: %s %s %s' % f_name, field.type, field.__class__)
         if field.type == 'string':
             column = Column(f_name, String(255), nullable=True, default=None)
         if field.type in ['text', 'lines']:
@@ -276,4 +280,3 @@ class SQLPFGAdapter(FormActionAdapter):
         return value
 
 registerATCT(SQLPFGAdapter, PROJECTNAME)
-
