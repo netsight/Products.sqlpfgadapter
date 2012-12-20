@@ -170,8 +170,11 @@ class SQLPFGAdapter(FormActionAdapter):
 
         whereclause = '_user_key = "%s"' % userkey
         existing = table.select(whereclause=whereclause).execute().fetchone()
-        if existing is not None:
-            return existing[field_id]
+        if existing is None:
+            return None
+
+        value = existing[field_id]
+        return self._unmassageValue(value, field)
 
     def createTable(self):
         """ Create a table in the database.
@@ -246,7 +249,7 @@ class SQLPFGAdapter(FormActionAdapter):
         """
         column = None
         f_name = field.getName()
-        logger.info('Trying to create column for: %s %s %s' % f_name, field.type, field.__class__)
+        logger.info('Trying to create column for: %s %s %s' % (f_name, field.type, field.__class__))
         if field.type == 'string':
             column = Column(f_name, String(255), nullable=True, default=None)
         if field.type in ['text', 'lines']:
@@ -266,17 +269,24 @@ class SQLPFGAdapter(FormActionAdapter):
         - list types (store as delimited text)
         """
         list_delimiter = '\nXXX'
-        string_time_format = '%Y-%m-%d %H:%M:%S'
 
-        field_id = field.getId()
         # Convert LinesField (list)
-        if type(value) == type([]):
+        if isinstance(value, list):
             # Store lines newline-separated?
             value = list_delimiter.join(value)
         if field.meta_type == 'FormDateField':
             # Use Zope's easy DateTime conversion
             zope_dt = ZopeDateTime(value)
             value = datetime.fromtimestamp(zope_dt.timeTime())
+        return value
+
+    def _unmassageValue(self, value, field):
+        """ Reverse the storage massaging
+        """
+        list_delimiter = '\nXXX'
+        if field.meta_type == 'FormMultiSelectionField':
+            # Store lines newline-separated?
+            value = value.split(list_delimiter)
         return value
 
 registerATCT(SQLPFGAdapter, PROJECTNAME)
