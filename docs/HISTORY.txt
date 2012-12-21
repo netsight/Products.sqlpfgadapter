@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.1.1dev (2012-12-21)
+-------------------------
+
+Use pool recycling to avoid mysql server connection failures
+
 1.1dev (2012-12-20)
 -------------------------
 
