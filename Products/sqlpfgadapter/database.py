@@ -6,8 +6,13 @@ from zope.component import getUtility
 from plone.registry.interfaces import IRegistry
 from Products.sqlpfgadapter.interfaces import ISQLPFGSettings
 
+
 class SQLDatabase(Database):
     """ database utility """
+
+    @property
+    def _engine_properties(self):
+        return {'pool_recycle': 3600}
 
     @property
     def _url(self):
@@ -26,4 +31,4 @@ class SQLDatabase(Database):
         pass
 
     def _setup_mappers(self, mappers, tables):
-        pass 
+        pass
