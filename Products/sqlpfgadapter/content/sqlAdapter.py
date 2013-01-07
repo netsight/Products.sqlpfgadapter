@@ -46,6 +46,7 @@ schema = FormAdapterSchema.copy() + Schema((
         ),
 ))
 
+
 class SQLPFGAdapter(FormActionAdapter):
     """ An adapter for PloneFormGen that saves results in an SQL table
     """
