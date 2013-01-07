@@ -201,7 +201,7 @@ class SQLPFGAdapter(FormActionAdapter):
         # Add the form fields to the table.
         for field in self.fgFields():
             column = self._createColumn(field)
-            if column:
+            if column is not None:
                 table.append_column(column)
 
         # Store the table in the database
