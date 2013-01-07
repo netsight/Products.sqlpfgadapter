@@ -286,7 +286,7 @@ class SQLPFGAdapter(FormActionAdapter):
         list_delimiter = '\nXXX'
         if field.meta_type == 'FormMultiSelectionField':
             # Store lines newline-separated?
-            value = value.split(list_delimiter)
+            value = value and value.split(list_delimiter)
         return value
 
 registerATCT(SQLPFGAdapter, PROJECTNAME)
