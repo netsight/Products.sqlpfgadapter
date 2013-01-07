@@ -218,7 +218,7 @@ class SQLPFGAdapter(FormActionAdapter):
         """
         generated_id = 'pfg_' + self.getParentNode().getId() + '_' + \
             self.getId()
-        table_id = generated_id.replace('-','_')
+        table_id = generated_id.replace('-', '_')
         return table_id
 
     def _createColumn(self, field):
