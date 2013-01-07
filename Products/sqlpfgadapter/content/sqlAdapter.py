@@ -110,6 +110,9 @@ class SQLPFGAdapter(FormActionAdapter):
             # Add userkey to record
             userkey = self.getUserKey()
             new_record['_user_key'] = userkey
+            # Is this the final submission?
+            if self.useFinaliseWorkflow() and 'form_finalise' in REQUEST:
+                new_record['_finalised'] = True
             # Look for existing rows
             whereclause = '_user_key = "%s"' % userkey
             existing = table.select(whereclause=whereclause).execute().rowcount
@@ -132,6 +135,23 @@ class SQLPFGAdapter(FormActionAdapter):
         sm = getSecurityManager()
         if not sm.checkPermission(ModifyPortalContent, self):
             raise Unauthorized("You do not have permission to download this form data")
+
+    security.declareProtected(View, 'isFinalised')
+    def isFinalised(self, userkey):
+        self.checkUserKey(userkey)
+
+        table = self._getTable()
+        if table is None:
+            logger.error('SQL Table not initialised!')
+            return False
+
+        whereclause = '_user_key = "%s"' % userkey
+        existing = table.select(whereclause=whereclause).execute().fetchone()
+        if existing is None:
+            return False
+
+        value = existing['_finalised']
+        return bool(value)
 
     security.declareProtected(View, 'hasExistingValuesFor')
     def hasExistingValuesFor(self, userkey):
@@ -192,6 +212,7 @@ class SQLPFGAdapter(FormActionAdapter):
             meta,
             Column('id', Integer, primary_key=True),
             )
+
         # If editing previous submissions allowed
         # we need to add a user key column
         if self.getAllowEditPrevious():
@@ -204,6 +225,13 @@ class SQLPFGAdapter(FormActionAdapter):
             column = self._createColumn(field)
             if column is not None:
                 table.append_column(column)
+
+        # If using the finalise workflow we need to store
+        # a finalised flag
+        if self.useFinaliseWorkflow():
+            column = Column('_finalised', Boolean(),
+                            nullable=False, default=False)
+            table.append_column(column)
 
         # Store the table in the database
         meta.create_all(db.engine)
