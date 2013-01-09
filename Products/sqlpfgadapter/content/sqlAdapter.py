@@ -93,9 +93,9 @@ class SQLPFGAdapter(FormActionAdapter):
         for field in fields:
             field_id = field.getId()
             if field_id in column_keys:
-                request_value = REQUEST.get(field_id)
-                if request_value:
-                    value = self._massageValue(request_value, field)
+                value = field.getValue(REQUEST)
+                if value is not None:
+                    value = self._massageValue(value, field)
                     new_record[field_id] = value
                 else:
                     # if it's a boolean and missing from the request
@@ -280,7 +280,11 @@ class SQLPFGAdapter(FormActionAdapter):
         f_name = field.getName()
         logger.info('Trying to create column for: %s %s %s' % (f_name, field.type, field.__class__))
         if field.type == 'string':
-            column = Column(f_name, String(255), nullable=True, default=None)
+            # larger storage needed for encrypted values
+            if getattr(field, 'encrypted', False):
+                column = Column(f_name, Text())
+            else:
+                column = Column(f_name, String(255), nullable=True, default=None)
         if field.type in ['text', 'lines']:
             column = Column(f_name, Text())
         if field.type == 'boolean':
