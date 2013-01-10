@@ -211,7 +211,7 @@ class SQLPFGAdapter(FormActionAdapter):
             table_id,
             meta,
             Column('id', Integer, primary_key=True),
-            )
+        )
 
         # If editing previous submissions allowed
         # we need to add a user key column
