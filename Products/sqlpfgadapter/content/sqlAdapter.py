@@ -285,7 +285,7 @@ class SQLPFGAdapter(FormActionAdapter):
                 column = Column(f_name, Text())
             else:
                 column = Column(f_name, String(255), nullable=True, default=None)
-        elif field.type in ['text', 'lines', ]:
+        elif field.type in ['text', 'lines', 'likert']:
             column = Column(f_name, Text())
         elif field.type == 'boolean':
             column = Column(f_name, Boolean())
