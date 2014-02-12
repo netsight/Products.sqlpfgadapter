@@ -32,6 +32,9 @@ from sqlalchemy import Integer, String, Text, Boolean, DateTime, Float
 logger = logging.getLogger("Products.sqlpfgadapter")
 from Products.sqlpfgadapter.config import PROJECTNAME
 
+# Used for storing multiple values in a column
+DELIMITER = '\nXXX'
+
 schema = FormAdapterSchema.copy() + Schema((
     StringField('table_id',
         widget=StringWidget(
@@ -303,12 +306,10 @@ class SQLPFGAdapter(FormActionAdapter):
         """ Do some extra massaging for the case of:
         - list types (store as delimited text)
         """
-        list_delimiter = '\nXXX'
-
         # Convert LinesField (list)
         if isinstance(value, list):
             # Store lines newline-separated?
-            value = list_delimiter.join(value)
+            value = DELIMITER.join(value)
         if field.meta_type == 'FormDateField':
             # Use Zope's easy DateTime conversion
             zope_dt = ZopeDateTime(value)
@@ -318,10 +319,9 @@ class SQLPFGAdapter(FormActionAdapter):
     def _unmassageValue(self, value, field):
         """ Reverse the storage massaging
         """
-        list_delimiter = '\nXXX'
         if field.meta_type == 'FormMultiSelectionField':
             # Store lines newline-separated?
-            value = value and value.split(list_delimiter)
+            value = value and value.split(DELIMITER)
         return value
 
 registerATCT(SQLPFGAdapter, PROJECTNAME)
