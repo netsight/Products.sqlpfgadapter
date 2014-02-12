@@ -285,16 +285,18 @@ class SQLPFGAdapter(FormActionAdapter):
                 column = Column(f_name, Text())
             else:
                 column = Column(f_name, String(255), nullable=True, default=None)
-        if field.type in ['text', 'lines']:
+        elif field.type in ['text', 'lines', ]:
             column = Column(f_name, Text())
-        if field.type == 'boolean':
+        elif field.type == 'boolean':
             column = Column(f_name, Boolean())
-        if field.type == 'integer':
+        elif field.type == 'integer':
             column = Column(f_name, Integer())
-        if field.type == 'datetime':
+        elif field.type == 'datetime':
             column = Column(f_name, DateTime())
-        if field.type == 'fixedpoint':
+        elif field.type == 'fixedpoint':
             column = Column(f_name, Float())
+        else:
+            logger.error('Unsupported column type: %s' % field.type)
         return column
 
     def _massageValue(self, value, field):
