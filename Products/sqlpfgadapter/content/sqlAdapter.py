@@ -306,21 +306,32 @@ class SQLPFGAdapter(FormActionAdapter):
         """ Do some extra massaging for the case of:
         - list types (store as delimited text)
         """
-        # Convert LinesField (list)
-        if isinstance(value, list):
-            # Store lines newline-separated?
-            value = DELIMITER.join(value)
         if field.meta_type == 'FormDateField':
             # Use Zope's easy DateTime conversion
             zope_dt = ZopeDateTime(value)
             value = datetime.fromtimestamp(zope_dt.timeTime())
+        elif field.meta_type == 'FormLikertField':
+            # converts the likert dict to a comma-separated string of
+            # question: answer
+            items = []
+            for i in range(len(value)):
+                label = field.fgField.questionSet[i]
+                items.append('%s: %s' % (label, value.get(str(i + 1), '')))
+            value = items
+
+        # Convert list values
+        if isinstance(value, list):
+            # Store lines newline-separated?
+            value = DELIMITER.join(value)
         return value
 
     def _unmassageValue(self, value, field):
         """ Reverse the storage massaging
         """
-        if field.meta_type == 'FormMultiSelectionField':
-            # Store lines newline-separated?
+        if field.meta_type in [
+                'FormMultiSelectionField',
+                'FormLikertField',
+        ]:
             value = value and value.split(DELIMITER)
         return value
 
