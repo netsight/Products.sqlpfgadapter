@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.3dev (2014-02-13)
+-------------------------
+- Support for likert fields
+
 1.2dev (2013-01-11)
 -------------------------
 - Support for finalise workflow
