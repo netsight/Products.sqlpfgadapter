@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.3.1dev (2014-02-28)
+-------------------------
+- Fix the likert field unmassaging
+
 1.3dev (2014-02-13)
 -------------------------
 - Support for likert fields
