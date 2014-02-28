@@ -340,7 +340,6 @@ class SQLPFGAdapter(FormActionAdapter):
                 question, answer = item.split(': ', 1)
                 value_dict[str(i + 1)] = answer
             value = value_dict
-        print value
         return value
 
 registerATCT(SQLPFGAdapter, PROJECTNAME)
