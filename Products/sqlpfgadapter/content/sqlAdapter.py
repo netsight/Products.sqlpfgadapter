@@ -330,9 +330,17 @@ class SQLPFGAdapter(FormActionAdapter):
         """
         if field.meta_type in [
                 'FormMultiSelectionField',
-                'FormLikertField',
         ]:
             value = value and value.split(DELIMITER)
+        elif field.meta_type == 'FormLikertField':
+            # convert back to likert-style dict
+            items = value.split(DELIMITER)
+            value_dict = {}
+            for i, item in enumerate(items):
+                question, answer = item.split(': ', 1)
+                value_dict[str(i + 1)] = answer
+            value = value_dict
+        print value
         return value
 
 registerATCT(SQLPFGAdapter, PROJECTNAME)
