@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.4dev (2014-07-23)
+-------------------------
+- Rename form fields if they're longer than the maximum column size
+
 1.3.1dev (2014-02-28)
 -------------------------
 - Fix the likert field unmassaging
