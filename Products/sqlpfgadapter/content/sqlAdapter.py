@@ -15,6 +15,7 @@ from Products.Archetypes.public import Schema, StringField, StringWidget
 from Products.ATContentTypes.content.base import registerATCT
 from Products.CMFCore.permissions import View
 from Products.CMFCore.permissions import ModifyPortalContent
+from plone import api
 
 # PloneFormGen imports
 from Products.PloneFormGen.content.actionAdapter import FormActionAdapter, \
@@ -34,6 +35,9 @@ from Products.sqlpfgadapter.config import PROJECTNAME
 
 # Used for storing multiple values in a column
 DELIMITER = '\nXXX'
+
+# DB Columns (field names) must be shorter than this
+MAX_COLUMN_SIZE = 64
 
 schema = FormAdapterSchema.copy() + Schema((
     StringField('table_id',
@@ -225,6 +229,12 @@ class SQLPFGAdapter(FormActionAdapter):
 
         # Add the form fields to the table.
         for field in self.fgFields():
+            # Rename the fields if they're too big
+            if len(field.__name__) > MAX_COLUMN_SIZE:
+                # The field object we want to rename is in the Form folder
+                ob = self[field.__name__]
+                api.content.rename(obj=ob, new_id=ob.getId()[:32], safe_id=True)
+
             column = self._createColumn(field)
             if column is not None:
                 table.append_column(column)
