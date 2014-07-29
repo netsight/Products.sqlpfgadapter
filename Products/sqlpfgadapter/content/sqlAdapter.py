@@ -254,12 +254,21 @@ class SQLPFGAdapter(FormActionAdapter):
     def _generateTableId(self):
         """ Generate a useful name for the table:
 
-        - take the action adapter's parent (the Form Folder) 's id
-        - prepend it with 'pfg', append the action adapter's id
+        Unfortunately MySQL has a 64 table name limit so using the id
+        of the Form Folder and the action adapter can result in an error.
+        Instead:
+
+        - take the action adapter's parent's id and truncate it (27 chars)
+        - prepend it with 'pfg' (3 chars)
+        - append the action adapter's id (32 chars)
+        - separate with underscores (2 chars)
         - replace dashes with underscores (good practice in SQL)
+
+        Total: 64 chars (max)
         """
-        generated_id = 'pfg_' + self.getParentNode().getId() + '_' + \
-            self.getId()
+        parent = self.getParentNode().getId()[:27]
+        adapter = self.UID()
+        generated_id = 'pfg_%s_%s' % (parent, adapter)
         table_id = generated_id.replace('-', '_')
         return table_id
 
