@@ -4,7 +4,7 @@ Changelog
 1.6 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- 1.5 was a broken release
 
 
 1.5dev (2014-11-26)
