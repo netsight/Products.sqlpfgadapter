@@ -110,6 +110,10 @@ class SQLPFGAdapter(FormActionAdapter):
                     if field.meta_type == 'FormBooleanField':
                         new_record[field_id] = False
 
+        # manually set the submission date
+        if '_submission_date' in column_keys:
+            new_record['_submission_date'] = datetime.now()
+
         if self.getAllowEditPrevious():
             # Check userkey column
             if '_user_key' not in column_keys:
@@ -245,6 +249,11 @@ class SQLPFGAdapter(FormActionAdapter):
             column = Column('_finalised', Boolean(),
                             nullable=False, default=False)
             table.append_column(column)
+
+        # Extra column to store the submission date
+        date_column = Column('_submission_date', DateTime(),
+                             nullable=True)
+        table.append_column(date_column)
 
         # Store the table in the database
         meta.create_all(db.engine)
