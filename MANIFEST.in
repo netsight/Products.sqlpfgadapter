@@ -2,6 +2,6 @@ include *.rst
 include *.txt
 
 graft Products
-recursive-include docs LICENSE.*
+recursive-include docs *
 
 global-exclude *.pyc
