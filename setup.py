@@ -38,5 +38,4 @@ setup(name='Products.sqlpfgadapter',
       target = plone
       """,
       setup_requires=[],
-      paster_plugins=["ZopeSkel"],
       )
