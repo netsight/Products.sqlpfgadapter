@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.5dev (unreleased)
+1.5dev (2014-11-26)
 -------------------
 - Added support for storing the submission date
   [mattss]
