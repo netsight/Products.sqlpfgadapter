@@ -1,0 +1,7 @@
+include *.rst
+include *.txt
+
+graft Products
+recursive-include docs LICENSE.*
+
+global-exclude *.pyc
