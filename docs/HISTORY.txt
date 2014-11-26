@@ -1,6 +1,12 @@
 Changelog
 =========
 
+1.6 (unreleased)
+----------------
+
+- Nothing changed yet.
+
+
 1.5dev (2014-11-26)
 -------------------
 - Added support for storing the submission date
